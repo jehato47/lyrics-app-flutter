@@ -6,12 +6,12 @@ import '../providers/song.dart';
 // import 'package:html/dom.dart';
 
 class Search extends ChangeNotifier {
-  String artistName;
-  String title;
-  String id;
-  String imgUrl;
-  String path;
-  bool isFavorite;
+  String? artistName;
+  String? title;
+  String? id;
+  String? imgUrl;
+  String? path;
+  bool? isFavorite;
 
   Search({
     this.id,
@@ -25,7 +25,8 @@ class Search extends ChangeNotifier {
 
 class SearchProvider extends ChangeNotifier {
   List<Search> _searchList = [];
-  List<Search> get searchList {
+
+  List<Search>? get searchList {
     if (_searchList == []) return null;
     return [..._searchList];
   }

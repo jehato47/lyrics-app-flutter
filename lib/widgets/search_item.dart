@@ -24,7 +24,7 @@ class _SearchItemState extends State<SearchItem> {
 
         try {
           song = await Provider.of<SearchProvider>(context).parseLyrics(
-            item.title + " " + item.artistName,
+            item.title! + " " + (item.artistName as String),
           );
           bool isAdded = Provider.of<SongListP>(context).isAdded(song);
           song.name = item.title;
@@ -57,7 +57,7 @@ class _SearchItemState extends State<SearchItem> {
           child: Padding(
             padding: EdgeInsets.all(20),
             child: Text(
-              "${item.title.length >= 23 ? item.title.substring(0, 23) + ".." : item.title}\n${item.artistName}",
+              "${item.title!.length >= 23 ? item.title!.substring(0, 23) + ".." : item.title}\n${item.artistName}",
               style: TextStyle(
                 color: Colors.white70,
               ),

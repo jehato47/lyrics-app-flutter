@@ -68,7 +68,7 @@ class _AuthCardState extends State<AuthCard> {
         title: Text("An Error Occured"),
         content: Text(message),
         actions: [
-          FlatButton(
+          TextButton(
             onPressed: () {
               Navigator.of(ctx).pop();
             },
@@ -80,11 +80,11 @@ class _AuthCardState extends State<AuthCard> {
   }
 
   void submit() async {
-    final isValid = _formKey.currentState.validate();
+    final isValid = _formKey.currentState!.validate();
 
     if (!isValid) return;
 
-    _formKey.currentState.save();
+    _formKey.currentState!.save();
     var errorMessage;
     final auth = Provider.of<Auth>(context);
     setState(() {
@@ -93,13 +93,13 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (authMode == AuthMode.Signup) {
         await auth.signUp(
-          _authCard["email"],
-          _authCard["password"],
+          (_authCard["email"] as String),
+          (_authCard["password"] as String),
         );
       } else {
         await auth.signIn(
-          _authCard["email"],
-          _authCard["password"],
+          (_authCard["email"] as String),
+          (_authCard["password"] as String),
         );
       }
     } on HttpException catch (error) {
@@ -159,13 +159,13 @@ class _AuthCardState extends State<AuthCard> {
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.emailAddress,
               validator: (value) {
-                if (value.isEmpty || !value.contains('@')) {
+                if (value!.isEmpty || !value.contains('@')) {
                   return 'Invalid email!';
                 }
                 return null;
               },
               onSaved: (value) {
-                _authCard["email"] = value;
+                _authCard["email"] = (value as String);
               },
               decoration: InputDecoration(
                 labelStyle: TextStyle(color: Colors.white54),
@@ -180,7 +180,7 @@ class _AuthCardState extends State<AuthCard> {
             SizedBox(height: 10),
             TextFormField(
               validator: (value) {
-                if (value.isEmpty || value.length < 5) {
+                if (value!.isEmpty || value.length < 5) {
                   return "Please enter a valid password";
                 }
                 return null;
@@ -189,7 +189,7 @@ class _AuthCardState extends State<AuthCard> {
               controller: _passwordController,
               obscureText: true,
               onSaved: (value) {
-                _authCard["password"] = value;
+                _authCard["password"] = (value as String);
               },
 
               decoration: InputDecoration(
@@ -213,7 +213,7 @@ class _AuthCardState extends State<AuthCard> {
               child: TextFormField(
                 validator: authMode == AuthMode.Signup
                     ? (value) {
-                        if (value.isEmpty || value.length < 5) {
+                        if (value!.isEmpty || value.length < 5) {
                           print(12);
                           return "Please enter a valid password";
                         }
@@ -243,13 +243,13 @@ class _AuthCardState extends State<AuthCard> {
                     padding: EdgeInsets.all(5),
                     child: CircularProgressIndicator(),
                   )
-                : RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-                    color: Colors.green,
+                : ElevatedButton(
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius: BorderRadius.circular(10),
+                    // ),
+                    // padding:
+                    //     EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                    // color: Colors.green,
                     onPressed: () {
                       submit();
                     },
@@ -258,7 +258,7 @@ class _AuthCardState extends State<AuthCard> {
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
-            FlatButton(
+            ElevatedButton(
               // materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               onPressed: () {
                 // TODO : Metinlerin niye üst üste bindiğine bak

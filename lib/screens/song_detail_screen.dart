@@ -6,7 +6,7 @@ class SongDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final song = ModalRoute.of(context).settings.arguments as Song;
+    final song = ModalRoute.of(context)!.settings.arguments as Song;
 
     return Container(
       decoration: BoxDecoration(
@@ -40,7 +40,7 @@ class SongDetailScreen extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 child: Center(
                   child: Text(
-                    song.lyrics,
+                    (song.lyrics as String),
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 16,

@@ -15,8 +15,8 @@ class _AddSongScreenState extends State<AddSongScreen> {
 
   bool _isLoading = false;
   bool _forUpdate = false;
-  void _saveForm() async {
-    var a = _form.currentState.validate();
+  Future<void> _saveForm() async {
+    var a = _form.currentState!.validate();
     if (!a) {
       return;
     }
@@ -24,7 +24,7 @@ class _AddSongScreenState extends State<AddSongScreen> {
     setState(() {
       _isLoading = true;
     });
-    _form.currentState.save();
+    _form.currentState!.save();
     final songListProvider = Provider.of<SongListP>(context, listen: false);
 
     await songListProvider.updateItem(song).then((response) {
@@ -48,7 +48,7 @@ class _AddSongScreenState extends State<AddSongScreen> {
 
   @override
   void didChangeDependencies() {
-    if (_isInit) song = ModalRoute.of(context).settings.arguments as Song;
+    if (_isInit) song = ModalRoute.of(context)!.settings.arguments as Song;
     _isInit = false;
     super.didChangeDependencies();
   }
@@ -104,7 +104,7 @@ class _AddSongScreenState extends State<AddSongScreen> {
                         ),
                         initialValue: song.name,
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value!.isEmpty) {
                             return "Enter a name";
                           }
                           return null;
@@ -131,15 +131,15 @@ class _AddSongScreenState extends State<AddSongScreen> {
                         ),
                         initialValue: song.lyrics,
                         validator: (value) {
-                          if (value.isEmpty) {
+                          if (value!.isEmpty) {
                             return "Enter Lyrics";
                           }
                           return null;
                         },
                         cursorColor: Colors.black,
                         maxLines: 20,
-                        onFieldSubmitted: (value) {
-                          _saveForm();
+                        onFieldSubmitted: (value) async {
+                          await _saveForm();
                         },
                         onSaved: (value) {
                           song = Song(
@@ -151,9 +151,11 @@ class _AddSongScreenState extends State<AddSongScreen> {
                         },
                         textInputAction: TextInputAction.done,
                       ),
-                      FlatButton(
-                        color: Colors.black38,
-                        onPressed: _saveForm,
+                      ElevatedButton(
+                        // color: Colors.black38,
+                        onPressed: () async {
+                          await _saveForm();
+                        },
                         child: Text(
                           onError
                               ? "resend"

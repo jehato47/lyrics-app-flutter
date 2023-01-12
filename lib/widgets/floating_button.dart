@@ -27,7 +27,7 @@ class CustomFloatingButtonState extends State<CustomFloatingButton> {
             context: context,
             builder: (ctx) => AlertDialog(
               actions: [
-                FlatButton(
+                ElevatedButton(
                   child: Text("Yes"),
                   onPressed: () {
                     Navigator.of(ctx).pop(true);

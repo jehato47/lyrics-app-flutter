@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lyrics/providers/auth.dart';
-import 'package:lyrics/providers/search.dart';
-import 'package:lyrics/screens/splash_screen.dart';
+import 'providers/auth.dart';
+import 'providers/search.dart';
+import 'screens/splash_screen.dart';
 import 'helpers/custom_route.dart';
 import 'package:provider/provider.dart';
 import 'screens/song_detail_screen.dart';
@@ -64,7 +64,9 @@ class MyApp extends StatelessWidget {
                     builder: (ctx, snapshot) {
                       return snapshot.connectionState == ConnectionState.waiting
                           ? SplashScreen(
-                              snapshot.error != null ? snapshot.error : null,
+                              snapshot.error != null
+                                  ? (snapshot.error as String)
+                                  : (null as String),
                             )
                           : AuthScreen();
                     }),

@@ -12,14 +12,14 @@ class SearchedDetailScreen extends StatefulWidget {
 }
 
 class _SearchedDetailScreenState extends State<SearchedDetailScreen> {
-  bool isAdded;
+  bool isAdded = false;
   bool isDisabled = false;
   bool isInit = true;
   @override
   void didChangeDependencies() {
     if (isInit) {
       var arg =
-          ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
       isAdded = arg["isAdded"];
     }
@@ -30,7 +30,7 @@ class _SearchedDetailScreenState extends State<SearchedDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final args =
-        ModalRoute.of(context).settings.arguments as Map<String, dynamic>;
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     Song song = args["item"] as Song;
     return Container(
       decoration: BoxDecoration(

@@ -11,7 +11,7 @@ class SongItem extends StatelessWidget {
     return Consumer<Song>(
       builder: (context, song, child) => Dismissible(
         direction: DismissDirection.startToEnd,
-        key: Key(song.id),
+        key: Key((song.id as String)),
         onDismissed: (w) async {
           await Provider.of<SongListP>(context, listen: false).removeItem(song);
         },
@@ -38,8 +38,8 @@ class SongItem extends StatelessWidget {
                 color: Colors.white38,
               ),
               leading: Text(
-                "${song.name.substring(0, song.name.length >= 25 ? 25 : song.name.length)}"
-                "${song.name.length >= 25 ? '..' : ''}",
+                "${song.name!.substring(0, song.name!.length >= 25 ? 25 : song.name!.length)}"
+                "${song.name!.length >= 25 ? '..' : ''}",
                 style: TextStyle(
                   fontSize: 18,
                   color: Colors.grey,

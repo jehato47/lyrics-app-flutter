@@ -22,8 +22,8 @@ class _SearchSongScreenState extends State<SearchSongScreen> {
     super.initState();
   }
 
-  String artist;
-  Song song;
+  String? artist;
+  Song? song;
   bool onGrid = false;
   final _form = GlobalKey<FormState>();
   bool _isLoading = false;
@@ -57,13 +57,14 @@ class _SearchSongScreenState extends State<SearchSongScreen> {
                 },
               ),
             ],
-            title: Text(artist != null && !onGrid ? artist : "Add lyrics"),
+            title: Text(
+                artist != null && !onGrid ? (artist as String) : "Add lyrics"),
           ),
           floatingActionButton: !onGrid
               ? FloatingActionButton(
                   child: Icon(isAdded ? Icons.done : Icons.add),
                   onPressed: () async {
-                    if (song.name == null || song.lyrics == null) return;
+                    if (song!.name == null || song!.lyrics == null) return;
 
                     try {
                       if (isDisabled) {
@@ -103,7 +104,7 @@ class _SearchSongScreenState extends State<SearchSongScreen> {
                         context: context,
                         builder: (ctx) => AlertDialog(
                           actions: [
-                            FlatButton(
+                            TextButton(
                               child: Text("Yes"),
                               onPressed: () {
                                 Navigator.of(ctx).pop(true);
@@ -134,13 +135,13 @@ class _SearchSongScreenState extends State<SearchSongScreen> {
                     ),
                     onChanged: (v) async {},
                     validator: (value) {
-                      if (value.isEmpty) {
+                      if (value!.isEmpty) {
                         return "Please enter a song name";
                       }
                       return null;
                     },
                     onFieldSubmitted: (value) async {
-                      bool isValid = _form.currentState.validate();
+                      bool isValid = _form.currentState!.validate();
                       if (!isValid) return;
                       setState(() {
                         searchList = [];
@@ -155,7 +156,7 @@ class _SearchSongScreenState extends State<SearchSongScreen> {
                           .parseLyrics(value);
                       setState(() {
                         isAdded = Provider.of<SongListP>(context).isAdded(song);
-                        artist = song.artist;
+                        artist = song?.artist;
 
                         _isLoading = false;
                       });
@@ -172,7 +173,7 @@ class _SearchSongScreenState extends State<SearchSongScreen> {
                             ? Center(
                                 child: CircularProgressIndicator(),
                               )
-                            : value.searchList.length == 0
+                            : value.searchList?.length == 0
                                 ? Text(
                                     !onGrid
                                         ? "For detail search enter song name and artist name"
@@ -195,7 +196,7 @@ class _SearchSongScreenState extends State<SearchSongScreen> {
                                             padding: EdgeInsets.all(10),
                                             child: Text(
                                               song != null
-                                                  ? "${song.lyrics}"
+                                                  ? "${song?.lyrics}"
                                                   : "",
                                               style: TextStyle(
                                                 color: Colors.white70,

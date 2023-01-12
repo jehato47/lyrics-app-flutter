@@ -16,7 +16,7 @@ class SearchItemGrid extends StatelessWidget {
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),
-      children: value.searchList.map((e) {
+      children: value.searchList!.map((e) {
         return ChangeNotifierProvider.value(
           value: Search(
             id: e.id,

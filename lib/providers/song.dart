@@ -3,10 +3,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Song extends ChangeNotifier {
-  String id;
-  String name;
-  String artist;
-  String lyrics;
+  String? id;
+  String? name;
+  String? artist;
+  String? lyrics;
 
   Song({
     this.id,
@@ -17,8 +17,8 @@ class Song extends ChangeNotifier {
 }
 
 class SongListP extends ChangeNotifier {
-  String token;
-  String userId;
+  String? token;
+  String? userId;
 
   List<Song> _songs = [];
 
@@ -36,16 +36,16 @@ class SongListP extends ChangeNotifier {
     return _songs.firstWhere((element) => id == element.id);
   }
 
-  bool isAdded(Song song) {
+  bool isAdded(Song? song) {
     return _songs.any((element) {
-      if (element.name == song.name && element.artist == song.artist) {
+      if (element.name == song?.name && element.artist == song?.artist) {
         return true;
       }
       return false;
     });
   }
 
-  Future<void> addSong(Song song) async {
+  Future<void> addSong(Song? song) async {
     var url =
         "https://master-imagery-289619-default-rtdb.firebaseio.com/lyrics/$userId.json?auth=$token";
     // final check = _songs.indexWhere((element) {
@@ -62,19 +62,19 @@ class SongListP extends ChangeNotifier {
         .post(
       url,
       body: json.encode({
-        "artist": song.artist,
-        "name": song.name,
-        "lyrics": song.lyrics,
+        "artist": song?.artist,
+        "name": song?.name,
+        "lyrics": song?.lyrics,
       }),
     )
         .then((response) {
       String id = json.decode(response.body)["name"];
       _songs.add(
         Song(
-          artist: song.artist,
-          name: song.name,
+          artist: song?.artist,
+          name: song?.name,
           id: id,
-          lyrics: song.lyrics,
+          lyrics: song?.lyrics,
         ),
       );
     }).catchError((error) {
@@ -137,12 +137,12 @@ class SongListP extends ChangeNotifier {
     }
   }
 
-  Future<void> removeItem(Song song) async {
+  Future<void> removeItem(Song? song) async {
     var songIdx;
     var existingSong;
     try {
       songIdx = _songs.indexWhere((element) {
-        if (element.name == song.name && element.lyrics == song.lyrics) {
+        if (element.name == song!.name && element.lyrics == song.lyrics) {
           print(element.id);
           return true;
         }
